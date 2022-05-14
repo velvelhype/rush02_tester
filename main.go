@@ -115,6 +115,10 @@ func testFile() {
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		fmt.Println("One arg pls")
+		return
+	}
 	if  strings.Contains(os.Args[1], ".fillit"){
 		testFile()
 	} else if isNumeric(os.Args[1]) {
