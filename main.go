@@ -59,8 +59,7 @@ func testDirectory() {
 		if pieces == nil {
 			return
 		}
-		info := InfoNew(sqrt(len(pieces)*4), pieces)
-		Solve(info)
+		Solve(pieces)
 		fmt.Println("-----------------")
 	}
 }
@@ -91,8 +90,7 @@ func randomGeneration() {
 	if pieces == nil {
 		return
 	}
-	info := InfoNew(sqrt(len(pieces)*4), pieces)
-	Solve(info)
+	Solve(pieces)
 	fmt.Println("-----------------")
 
 }
@@ -109,8 +107,7 @@ func testFile() {
 	if pieces == nil {
 		return
 	}
-	info := InfoNew(sqrt(len(pieces)*4), pieces)
-	Solve(info)
+	Solve(pieces)
 	fmt.Println("-----------------")
 }
 
