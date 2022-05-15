@@ -43,7 +43,7 @@ func testDirectory() {
 		fmt.Println(name)
 		fmt.Println("-----------------")
 		file := string(os.Args[1]) + "/" + string(name)
-		pieces, err := ConvertFile(file)
+		pieces, err := piscine.ConvertFile(file)
 		if err != nil {
 			piscine.Puts(err.Error())
 			return
@@ -52,7 +52,7 @@ func testDirectory() {
 			piscine.Puts("Impossible")
 			return
 		}
-		Solve(pieces)
+		piscine.Solve(pieces)
 		fmt.Println("-----------------")
 	}
 }
@@ -74,87 +74,85 @@ func randomGeneration() {
 	if len(os.Args) == 3 {
 		j, err = strconv.Atoi(os.Args[2])
 	}
-
-	for i = 0; i < j; i++ {
-	// ここで引数分ランダム駒を作っていき、solveにかける
-	pieces := []Piece{}
+	for x := 0; x < j; x++ {
+		// ここで引数分ランダム駒を作っていき、solveにかける
+		pieces := []piscine.Piece{}
+		// pieces = nil
 	for j := i; j > 0; j-- {
-		pieces = nil
 		rand.Seed(time.Now().UnixNano())
 		form := randomInt(1, 19)
 		if form == 1{
-			pieces = append(pieces, [][]SmartBool{{T, T, T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T, piscine.T, piscine.T}})
 		}
 		if form == 2{
-			pieces = append(pieces, [][]SmartBool{{T, T, T}, {T, F, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T, piscine.T}, {piscine.T, piscine.F, piscine.F}})
 		}
 		if form == 3{
-			pieces = append(pieces, [][]SmartBool{{T, T, T}, {F, T, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T, piscine.T}, {piscine.F, piscine.T, piscine.F}})
 		}
 		if form == 4{
-			pieces = append(pieces, [][]SmartBool{{T, T, T}, {F, F, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T, piscine.T}, {piscine.F, piscine.F, piscine.T}})
 		}
 		if form == 5{
-			pieces = append(pieces, [][]SmartBool{{T, T}, {T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T}, {piscine.T, piscine.T}})
 		}
 		if form == 6{
-			pieces = append(pieces, [][]SmartBool{{T, T, F}, {F, T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T, piscine.F}, {piscine.F, piscine.T, piscine.T}})
 		}
 		if form == 7{
-			pieces = append(pieces, [][]SmartBool{{T, T}, {T, F}, {T, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T}, {piscine.T, piscine.F}, {piscine.T, piscine.F}})
 		}
 		if form == 8{
-			pieces = append(pieces, [][]SmartBool{{T, T}, {F, T}, {F, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.T}, {piscine.F, piscine.T}, {piscine.F, piscine.T}})
 		}
 		if form == 9{
-			pieces = append(pieces, [][]SmartBool{{F, T, T}, {T, T, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.T, piscine.T}, {piscine.T, piscine.T, piscine.F}})
 		}
 		if form == 10{
-			pieces = append(pieces, [][]SmartBool{{T, F, F}, {T, T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.F, piscine.F}, {piscine.T, piscine.T, piscine.T}})
 		}
 		if form == 11{
-			pieces = append(pieces, [][]SmartBool{{F, T, F}, {T, T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.T, piscine.F}, {piscine.T, piscine.T, piscine.T}})
 		}
 		if form == 12{
-			pieces = append(pieces, [][]SmartBool{{F, F, T}, {T, T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.F, piscine.T}, {piscine.T, piscine.T, piscine.T}})
 		}
 		if form == 13{
-			pieces = append(pieces, [][]SmartBool{{T, F}, {T, T}, {F, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.F}, {piscine.T, piscine.T}, {piscine.F, piscine.T}})
 		}
 		if form == 14{
-			pieces = append(pieces, [][]SmartBool{{F, T}, {T, T}, {T, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.T}, {piscine.T, piscine.T}, {piscine.T, piscine.F}})
 		}
 		if form == 15{
-			pieces = append(pieces, [][]SmartBool{{T, F}, {T, T}, {T, F}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.F}, {piscine.T, piscine.T}, {piscine.T, piscine.F}})
 		}
 		if form == 16{
-			pieces = append(pieces, [][]SmartBool{{F, T}, {T, T}, {F, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.T}, {piscine.T, piscine.T}, {piscine.F, piscine.T}})
 		}
 		if form == 17{
-			pieces = append(pieces, [][]SmartBool{{T, F}, {T, F}, {T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T, piscine.F}, {piscine.T, piscine.F}, {piscine.T, piscine.T}})
 		}
 		if form == 18{
-			pieces = append(pieces, [][]SmartBool{{F, T}, {F, T}, {T, T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.F, piscine.T}, {piscine.F, piscine.T}, {piscine.T, piscine.T}})
 		}
 		if form == 19{
-			pieces = append(pieces, [][]SmartBool{{T}, {T}, {T}, {T}})
+			pieces = append(pieces, [][]piscine.SmartBool{{piscine.T}, {piscine.T}, {piscine.T}, {piscine.T}})
+		}
+		if len(pieces) > 26 {
+			piscine.Puts("Impossible")
+			return
 		}
 	}
-	if len(pieces) > 26 {
-		piscine.Puts("Impossible")
-		return
-	}
-	Solve(pieces)
+	piscine.Solve(pieces)
 	fmt.Println("-----------------")
 	}
-
 }
 
 func testFile() {
 	fmt.Println("-----------------")
 	fmt.Println(os.Args[1])
 	fmt.Println("-----------------")
-	pieces, err := ConvertFile(os.Args[1])
+	pieces, err := piscine.ConvertFile(os.Args[1])
 	if err != nil {
 		piscine.Puts(err.Error())
 		return
@@ -163,7 +161,7 @@ func testFile() {
 		piscine.Puts("Impossible")
 		return
 	}
-	Solve(pieces)
+	piscine.Solve(pieces)
 	fmt.Println("-----------------")
 }
 
