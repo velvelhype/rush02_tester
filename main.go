@@ -70,11 +70,16 @@ func randomGeneration() {
 		fmt.Println(err)
 		os.Exit(2)
 	}
+	j := 10
+	if len(os.Args) == 3 {
+		j, err = strconv.Atoi(os.Args[2])
+	}
+
+	for i = 0; i < j; i++ {
 	// ここで引数分ランダム駒を作っていき、solveにかける
 	pieces := []Piece{}
 	for j := i; j > 0; j-- {
 		rand.Seed(time.Now().UnixNano())
-		fmt.Println(randomInt(1, 19))
 		form := randomInt(1, 19)
 		if form == 1{
 			pieces = append(pieces, [][]SmartBool{{T, T, T, T}})
@@ -140,6 +145,7 @@ func randomGeneration() {
 	}
 	Solve(pieces)
 	fmt.Println("-----------------")
+	}
 
 }
 
@@ -161,7 +167,7 @@ func testFile() {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	if len(os.Args) < 2 {
 		fmt.Println("One arg pls")
 		return
 	}
