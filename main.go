@@ -79,6 +79,7 @@ func randomGeneration() {
 	// ここで引数分ランダム駒を作っていき、solveにかける
 	pieces := []Piece{}
 	for j := i; j > 0; j-- {
+		pieces = nil
 		rand.Seed(time.Now().UnixNano())
 		form := randomInt(1, 19)
 		if form == 1{
