@@ -30,14 +30,6 @@ func isNumeric(s string) bool {
 	return true
 }
 
-func sqrt(square int) int {
-	for i:=1; ; i++ {
-		if i*i >= square {
-			return i
-		}
-	}
-}
-
 func testDirectory() {
 	file, err := os.Open(os.Args[1])
 	if err != nil {
@@ -51,12 +43,13 @@ func testDirectory() {
 		fmt.Println(name)
 		fmt.Println("-----------------")
 		file := string(os.Args[1]) + "/" + string(name)
-		reader := piscine.Read(file)
-		if reader == nil {
+		pieces, err := ConvertFile(file)
+		if err != nil {
+			piscine.Puts(err.Error())
 			return
 		}
-		pieces := Convert(reader)
-		if pieces == nil {
+		if len(pieces) > 26 {
+			piscine.Puts("Impossible")
 			return
 		}
 		Solve(pieces)
@@ -71,23 +64,78 @@ func randomInt(min, max int) int {
 //とりあえず試行回数は一回で、何回やるかもとるか
 func randomGeneration() {
 	fmt.Printf("random generation : %s elements\n", os.Args[1])
+	fmt.Println("-----------------")
 	i, err := strconv.Atoi(os.Args[1])
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)
 	}
-	// ここひ引数分ランダム駒を作っていき、solveにかける
+	// ここで引数分ランダム駒を作っていき、solveにかける
+	pieces := []Piece{}
 	for j := i; j > 0; j-- {
 		rand.Seed(time.Now().UnixNano())
 		fmt.Println(randomInt(1, 19))
+		form := randomInt(1, 19)
+		if form == 1{
+			pieces = append(pieces, [][]SmartBool{{T, T, T, T}})
+		}
+		if form == 2{
+			pieces = append(pieces, [][]SmartBool{{T, T, T}, {T, F, F}})
+		}
+		if form == 3{
+			pieces = append(pieces, [][]SmartBool{{T, T, T}, {F, T, F}})
+		}
+		if form == 4{
+			pieces = append(pieces, [][]SmartBool{{T, T, T}, {F, F, T}})
+		}
+		if form == 5{
+			pieces = append(pieces, [][]SmartBool{{T, T}, {T, T}})
+		}
+		if form == 6{
+			pieces = append(pieces, [][]SmartBool{{T, T, F}, {F, T, T}})
+		}
+		if form == 7{
+			pieces = append(pieces, [][]SmartBool{{T, T}, {T, F}, {T, F}})
+		}
+		if form == 8{
+			pieces = append(pieces, [][]SmartBool{{T, T}, {F, T}, {F, T}})
+		}
+		if form == 9{
+			pieces = append(pieces, [][]SmartBool{{F, T, T}, {T, T, F}})
+		}
+		if form == 10{
+			pieces = append(pieces, [][]SmartBool{{T, F, F}, {T, T, T}})
+		}
+		if form == 11{
+			pieces = append(pieces, [][]SmartBool{{F, T, F}, {T, T, T}})
+		}
+		if form == 12{
+			pieces = append(pieces, [][]SmartBool{{F, F, T}, {T, T, T}})
+		}
+		if form == 13{
+			pieces = append(pieces, [][]SmartBool{{T, F}, {T, T}, {F, T}})
+		}
+		if form == 14{
+			pieces = append(pieces, [][]SmartBool{{F, T}, {T, T}, {T, F}})
+		}
+		if form == 15{
+			pieces = append(pieces, [][]SmartBool{{T, F}, {T, T}, {T, F}})
+		}
+		if form == 16{
+			pieces = append(pieces, [][]SmartBool{{F, T}, {T, T}, {F, T}})
+		}
+		if form == 17{
+			pieces = append(pieces, [][]SmartBool{{T, F}, {T, F}, {T, T}})
+		}
+		if form == 18{
+			pieces = append(pieces, [][]SmartBool{{F, T}, {F, T}, {T, T}})
+		}
+		if form == 19{
+			pieces = append(pieces, [][]SmartBool{{T}, {T}, {T}, {T}})
+		}
 	}
-
-	reader := piscine.Read(os.Args[1])
-	if reader == nil {
-		return
-	}
-	pieces := Convert(reader)
-	if pieces == nil {
+	if len(pieces) > 26 {
+		piscine.Puts("Impossible")
 		return
 	}
 	Solve(pieces)
@@ -99,12 +147,13 @@ func testFile() {
 	fmt.Println("-----------------")
 	fmt.Println(os.Args[1])
 	fmt.Println("-----------------")
-	reader := piscine.Read(os.Args[1])
-	if reader == nil {
+	pieces, err := ConvertFile(os.Args[1])
+	if err != nil {
+		piscine.Puts(err.Error())
 		return
 	}
-	pieces := Convert(reader)
-	if pieces == nil {
+	if len(pieces) > 26 {
+		piscine.Puts("Impossible")
 		return
 	}
 	Solve(pieces)
